@@ -40,6 +40,7 @@ class MemesTableViewController: MemeMeController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        
         tableView.reloadData()
     }
     
@@ -49,7 +50,6 @@ class MemesTableViewController: MemeMeController {
         super.viewWillDisappear(true)
         tableView.isEditing = false
         isViewInEditMode(false)
-        
     }
     
     //MARK: Buttons
@@ -74,8 +74,6 @@ class MemesTableViewController: MemeMeController {
         }
     }
     
-    
-    
     @IBAction func editButton(_ sender: Any) {
         var editToggle = false
         tableView.allowsMultipleSelectionDuringEditing = true
@@ -93,19 +91,20 @@ class MemesTableViewController: MemeMeController {
     //Method to check if the view is in edit mode and set buttons and UI properly
     
     func isViewInEditMode(_ editing: Bool) {
-        if editing {
+        switch editing {
+        case true:
             editButton.image = UIImage(named: "doneShape")
             addButton.isEnabled = false
             deleteButton.tintColor = .white
             deleteButton.isEnabled = true
-        } else {
+        case false:
             editButton.image = UIImage(named: "editShape")
             addButton.isEnabled = true
             deleteButton.tintColor = .clear
             deleteButton.isEnabled = false
         }
     }
-
+    
     //Check if memes array is empty and set the logo and edit button enable accordingly
     
     func checkMemesArray() {
@@ -148,8 +147,6 @@ extension MemesTableViewController: UITableViewDelegate, UITableViewDataSource {
         cell.layer.shadowRadius = 1.0
         cell.layer.shadowOpacity = 0.35
         
-        
-        
         return cell
     }
     
@@ -169,7 +166,7 @@ extension MemesTableViewController: UITableViewDelegate, UITableViewDataSource {
     //Reorder array when deleting
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-     
+        
         MemesList.shared.memes.remove(at: indexPath.row)
         let indexPaths = [indexPath]
         tableView.deleteRows(at: indexPaths, with: .automatic)

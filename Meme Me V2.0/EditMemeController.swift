@@ -57,8 +57,8 @@ class EditMemeController: MemeMeController {
         
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         setupTextField(font: activeFont)
-        self.cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
-        self.shareButton.isEnabled = false
+        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        shareButton.isEnabled = false
         cancelButton(shouldReturn: true)
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         
@@ -140,13 +140,13 @@ class EditMemeController: MemeMeController {
         //move the center of the imageView based on the size of the screen
         
         if screenMaxLenght >= 812 && UIDevice.current.userInterfaceIdiom == .phone {
-            self.imageViewCenterYConstraint.constant = -2
-            self.logoCenterYConstraint.constant = -2
+            imageViewCenterYConstraint.constant = -2
+            logoCenterYConstraint.constant = -2
         } else {
             if image.size.width < image.size.height && UIDevice.current.orientation.isLandscape{
-                self.imageViewCenterYConstraint.constant = -8
+                imageViewCenterYConstraint.constant = -8
             } else {
-                self.imageViewCenterYConstraint.constant = 0
+                imageViewCenterYConstraint.constant = 0
             }
         }
         let barsHeight: CGFloat = navAndToolBarHeights + extraHeight
@@ -234,7 +234,7 @@ class EditMemeController: MemeMeController {
                 dismiss(animated: true, completion: nil)
             }
         } else {
-            self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+            view.window!.rootViewController?.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -256,8 +256,8 @@ class EditMemeController: MemeMeController {
     @IBAction func changeFontPicker (_ sender: Any) {
         
         customPickerView()
-        self.view.addSubview(picker)
-        self.view.addSubview(toolbarForPicker)
+        view.addSubview(picker)
+        view.addSubview(toolbarForPicker)
         
     }
     
@@ -310,7 +310,7 @@ class EditMemeController: MemeMeController {
         return memedImage
     }
     
-    //Sava image to photo album and if "shouldAlsoSave" the new meme will be added to the collection
+    //Save image to photo album and if "shouldAlsoSave" the new meme will be added to the collection
     
     func completionHandler(shouldAlsoAppend: Bool) {
         
@@ -363,7 +363,7 @@ class EditMemeController: MemeMeController {
         
         MemesList.shared.memes.append(meme)
         
-        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+        view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
     //Edited meme will be replaced at indexPath
@@ -380,7 +380,7 @@ class EditMemeController: MemeMeController {
         let index = MemesList.shared.memes.firstIndex(of: self.meme)!
         MemesList.shared.memes.remove(at: index)
         MemesList.shared.memes.insert(newMeme!, at: index)
-        self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+        view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -402,10 +402,10 @@ extension EditMemeController: UIImagePickerControllerDelegate, UINavigationContr
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            self.imageMemeView.image = image
+            imageMemeView.image = image
             updateConstraintsToImage(image: image)
             cancelButton(shouldReturn: false)
-            self.shareButton.isEnabled = true
+            shareButton.isEnabled = true
         }
         dismiss(animated: true, completion: nil)
     }
@@ -441,7 +441,7 @@ extension EditMemeController: UITextFieldDelegate {
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        self.activeTextField = textField
+        activeTextField = textField
         
         return true
     }
@@ -457,11 +457,11 @@ extension EditMemeController: UITextFieldDelegate {
         for word in arrayOfWords {
             if textField.text == word  {
                 if topTextField.isEditing && topTextFieldWasEdited == false {
-                    self.topTextFieldWasEdited = true
-                    self.topTextField.text = ""
+                    topTextFieldWasEdited = true
+                    topTextField.text = ""
                 } else if bottomTextField.isEditing && bottomTextFieldWasEdited == false {
-                    self.bottomTextFieldWasEdited = true
-                    self.bottomTextField.text = ""
+                    bottomTextFieldWasEdited = true
+                    bottomTextField.text = ""
                 }
             }
         }
@@ -523,8 +523,8 @@ extension EditMemeController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     @objc func onDoneButtonTapped() {
         
-        self.toolbarForPicker.removeFromSuperview()
-        self.picker.removeFromSuperview()
+        toolbarForPicker.removeFromSuperview()
+        picker.removeFromSuperview()
     }
     
     //The number of columns
@@ -546,10 +546,10 @@ extension EditMemeController: UIPickerViewDataSource, UIPickerViewDelegate {
     //Set the font to each textfield's
     func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        self.activeFont = "\(arrayOfFonts[row])"
+        activeFont = "\(arrayOfFonts[row])"
         setupTextField(font: "\(arrayOfFonts[row])")
         
-        self.view.endEditing(true)
+        view.endEditing(true)
     }
 }
 
