@@ -15,64 +15,65 @@ class EditMemeController: MemeMeController {
     
     var meme: Meme!
     let verticalSpacing: CGFloat = 8
-    let picker = UIPickerView()
+    
+    let picker =           UIPickerView()
     var toolbarForPicker = UIToolbar()
     var activeFont = "Impact"
     var arrayOfFonts = ["Futura-Bold", "GillSans-Bold", "Helvetica Bold", "Impact", "MarkerFelt-Wide", "KohinoorBangla-Semibold", "ArialRoundedMTBold", "ChalkboardSE-Bold"]
-    var topTextFieldWasEdited: Bool = false
-    var bottomTextFieldWasEdited: Bool = false
+    var topTextFieldWasEdited =    false
+    var bottomTextFieldWasEdited = false
     var activeTextField: UITextField!
     let alertService = AlertService()
     
     //ToolBar & Buttons Outlets
     
-    @IBOutlet weak var toolBar: UIToolbar!
+    @IBOutlet weak var toolBar:      UIToolbar!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
-    @IBOutlet weak var albumButton: UIBarButtonItem!
+    @IBOutlet weak var albumButton:  UIBarButtonItem!
     
     //Custom NavBar & Buttons Outlets
     
-    @IBOutlet weak var cancelButton: UIBarButtonItem!
-    @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton:  UIBarButtonItem!
+    @IBOutlet weak var shareButton:   UIBarButtonItem!
     @IBOutlet weak var navigationBar: UINavigationBar!
-    @IBOutlet weak var navBarTitle: UINavigationItem!
+    @IBOutlet weak var navBarTitle:   UINavigationItem!
     
     //TextFields and ImageView Outlets
     
-    @IBOutlet weak var imageMemeView: UIImageView!
-    @IBOutlet weak var topTextField: UITextField!
+    @IBOutlet weak var imageMemeView:   UIImageView!
+    @IBOutlet weak var topTextField:    UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     
     //Constraints Outlets
     
-    @IBOutlet weak var imageViewWidth: NSLayoutConstraint!
-    @IBOutlet weak var imageViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var imageViewWidth:             NSLayoutConstraint!
+    @IBOutlet weak var imageViewHeight:            NSLayoutConstraint!
     @IBOutlet weak var imageViewCenterYConstraint: NSLayoutConstraint!
-    @IBOutlet weak var logoCenterYConstraint: NSLayoutConstraint!
+    @IBOutlet weak var logoCenterYConstraint:      NSLayoutConstraint!
     
     //MARK: View lifecycle
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         setupTextField(font: activeFont)
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
-        shareButton.isEnabled = false
+        shareButton.isEnabled =  false
         cancelButton(shouldReturn: true)
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         
         if meme != nil {
-            navBarTitle.title = "Edit Meme"
+            navBarTitle.title =      "Edit Meme"
             cameraButton.isEnabled = false
             cameraButton.tintColor = .black
-            albumButton.isEnabled = false
-            albumButton.tintColor = .black
+            albumButton.isEnabled =  false
+            albumButton.tintColor =  .black
             
         } else {
             navBarTitle.title = "Meme Generator"
         }
-       
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,11 +86,12 @@ class EditMemeController: MemeMeController {
             object: nil)
         
         if let meme = self.meme {
-
+            
             setupTextField(font: meme.font)
-            topTextField.text = meme.topText
+            
+            topTextField.text =    meme.topText
             bottomTextField.text = meme.bottomText
-            imageMemeView.image = meme.originalImage
+            imageMemeView.image =  meme.originalImage
             updateConstraintsToImage(image: imageMemeView.image!)
             shareButton.isEnabled = true
             cancelButton(shouldReturn: false)
@@ -119,23 +121,23 @@ class EditMemeController: MemeMeController {
     
     //Update width and height of the imageView based on the image size
     
-
+    
     func updateConstraintsToImage(image: UIImage) {
         
-        let screenWidth = UIScreen.main.bounds.size.width
-        let screenHeight = UIScreen.main.bounds.size.height
-        let screenMaxLenght = max(screenWidth, screenHeight)
+        let screenWidth =          UIScreen.main.bounds.size.width
+        let screenHeight =         UIScreen.main.bounds.size.height
+        let screenMaxLenght =      max(screenWidth, screenHeight)
         let navAndToolBarHeights = toolBar.frame.height + navigationBar.frame.height
-        let viewWidth = UIScreen.main.bounds.width
-        let widthProportion = viewWidth / image.size.width
-        var viewHeight = UIScreen.main.bounds.height
-        var heightProportion = viewHeight / image.size.height
+        let viewWidth =            UIScreen.main.bounds.width
+        let widthProportion =      viewWidth / image.size.width
+        var viewHeight =           UIScreen.main.bounds.height
+        var heightProportion =     viewHeight / image.size.height
         var paddingTotal: CGFloat = 0
         
         if #available(iOS 11.0, *) {
             let bottomPadding = view.safeAreaInsets.bottom
-            let topPadding = view.safeAreaInsets.top
-            paddingTotal = bottomPadding + topPadding
+            let topPadding =    view.safeAreaInsets.top
+            paddingTotal =      bottomPadding + topPadding
         }
         
         let extraHeight = UIApplication.shared.statusBarFrame.height + paddingTotal
@@ -158,13 +160,13 @@ class EditMemeController: MemeMeController {
             
             if widthProportion < heightProportion {
                 //adjust imageView by width
-                imageViewWidth.constant = viewWidth
+                imageViewWidth.constant =  viewWidth
                 imageViewHeight.constant = image.size.height * widthProportion
                 
             } else {
                 // adjust imageView by height
                 imageViewHeight.constant = viewHeight
-                imageViewWidth.constant = image.size.width * heightProportion
+                imageViewWidth.constant =  image.size.width * heightProportion
             }
         } else {
             
@@ -173,13 +175,13 @@ class EditMemeController: MemeMeController {
             
             if widthProportion < heightProportion {
                 //adjust imageView by width
-                imageViewWidth.constant = viewWidth
+                imageViewWidth.constant =  viewWidth
                 imageViewHeight.constant = image.size.height * widthProportion
                 
             } else {
                 // adjust imageView by height
                 imageViewHeight.constant = viewHeight
-                imageViewWidth.constant = image.size.width * heightProportion
+                imageViewWidth.constant =  image.size.width * heightProportion
             }
         }
     }
@@ -209,13 +211,13 @@ class EditMemeController: MemeMeController {
     //MARK: Cancel button resets the textfields and imageview to default
     
     func cancelButton(shouldReturn: Bool) {
-       
+        
         if meme == nil {
-        if shouldReturn {
-            cancelButton.image = UIImage(named: "dismissShape")
-        } else {
-            cancelButton.image = UIImage(named: "cancelShape")
-        }
+            if shouldReturn {
+                cancelButton.image = UIImage(named: "dismissShape")
+            } else {
+                cancelButton.image = UIImage(named: "cancelShape")
+            }
         } else {
             cancelButton.image = UIImage(named: "dismissShape")
         }
@@ -225,14 +227,16 @@ class EditMemeController: MemeMeController {
         
         if meme == nil {
             if cancelButton.image == UIImage(named: "cancelShape") {
+                
                 setupTextField(font: "Impact")
-                imageMemeView.image = nil
-                topTextFieldWasEdited = false
+                
+                imageMemeView.image =      nil
+                topTextFieldWasEdited =    false
                 bottomTextFieldWasEdited = false
-                cancelButton(shouldReturn: true)
-                shareButton.isEnabled = false
-                imageViewWidth.constant = 268
+                shareButton.isEnabled =    false
+                imageViewWidth.constant =  268
                 imageViewHeight.constant = 150
+                cancelButton(shouldReturn: true)
             } else {
                 dismiss(animated: true, completion: nil)
             }
@@ -261,7 +265,6 @@ class EditMemeController: MemeMeController {
         customPickerView()
         view.addSubview(picker)
         view.addSubview(toolbarForPicker)
-        
     }
     
     //MARK: Share button
@@ -286,10 +289,10 @@ class EditMemeController: MemeMeController {
             updateAndSave: { [weak self]
                 in
                 self?.completionHandler(shouldAlsoAppend: false)
-            })
+        })
         
         alertVC.modalPresentationStyle = .overCurrentContext
-        alertVC.modalTransitionStyle = .crossDissolve
+        alertVC.modalTransitionStyle =   .crossDissolve
         present(alertVC, animated: true, completion: nil)
     }
     
@@ -299,9 +302,9 @@ class EditMemeController: MemeMeController {
     
     func generateMemedImage() -> UIImage {
         UIGraphicsBeginImageContextWithOptions(imageMemeView.frame.size, false, 0.0)
-        let screenShotArea = CGRect(x: -imageMemeView.frame.minX,
-                                    y: -imageMemeView.frame.minY,
-                                    width: view.bounds.size.width,
+        let screenShotArea = CGRect(x:      -imageMemeView.frame.minX,
+                                    y:      -imageMemeView.frame.minY,
+                                    width:  view.bounds.size.width,
                                     height: view.bounds.size.height
         )
         view.drawHierarchy(in: screenShotArea,
@@ -322,9 +325,9 @@ class EditMemeController: MemeMeController {
         present(activityView, animated: true, completion: nil)
         
         activityView.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?,
-            completed: Bool,
+            completed:          Bool,
             arrayReturnedItems: [Any]?,
-            error: Error?
+            error:              Error?
             )
             in
             if completed {
@@ -332,9 +335,9 @@ class EditMemeController: MemeMeController {
                 switch activity {
                 case .saveToCameraRoll:
                     if shouldAlsoAppend {
-                    self.appendMemeToArray()
+                        self.appendMemeToArray()
                     } else {
-                    self.editAndReplaceMeme()
+                        self.editAndReplaceMeme()
                     }
                     print("Saved")
                 default:
@@ -353,16 +356,16 @@ class EditMemeController: MemeMeController {
     
     func appendMemeToArray(){
         
-        guard let topText = topTextField.text,
+        guard let topText =  topTextField.text,
             let bottomText = bottomTextField.text,
-            let image = imageMemeView.image
+            let image =      imageMemeView.image
             else {return}
         
-        let meme = Meme(topText: topText,
-                        bottomText: bottomText,
-                        font: activeFont,
+        let meme = Meme(topText:       topText,
+                        bottomText:    bottomText,
+                        font:          activeFont,
                         originalImage: image,
-                        editedImage: generateMemedImage())
+                        editedImage:   generateMemedImage())
         
         MemesList.shared.memes.append(meme)
         
@@ -375,9 +378,9 @@ class EditMemeController: MemeMeController {
         
         var newMeme = self.meme
         
-        newMeme?.topText = topTextField.text!
-        newMeme?.bottomText = bottomTextField.text!
-        newMeme?.font = activeFont
+        newMeme?.topText =     topTextField.text!
+        newMeme?.bottomText =  bottomTextField.text!
+        newMeme?.font =        activeFont
         newMeme?.editedImage = generateMemedImage()
         
         let index = MemesList.shared.memes.firstIndex(of: self.meme)!
@@ -395,7 +398,7 @@ extension EditMemeController: UIImagePickerControllerDelegate, UINavigationContr
     
     func presentPickerViewController(source: UIImagePickerController.SourceType) {
         let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
+        imagePicker.delegate =   self
         imagePicker.sourceType = source
         present(imagePicker, animated: true, completion: nil)
     }
@@ -509,8 +512,8 @@ extension EditMemeController: UIPickerViewDataSource, UIPickerViewDelegate {
             height: 50)
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
-                                                     target: nil,
-                                                     action: nil)
+                                        target: nil,
+                                        action: nil)
         
         let toolBarPickerDone = UIBarButtonItem(image:  UIImage(named: "toolbarPickerDone"),
                                                 style:  .plain,
