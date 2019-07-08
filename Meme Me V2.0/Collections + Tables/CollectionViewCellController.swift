@@ -23,7 +23,6 @@ class CollectionViewCellController: UICollectionViewCell {
         didSet {
             checkedImageView.image = UIImage(named: "uncheckedShape")
             checkedImageView.isHidden = !isEditing
-            
         }
     }
     
@@ -41,15 +40,17 @@ class CollectionViewCellController: UICollectionViewCell {
     
     func configureCell (with meme: Meme) {
         
-        cellImageView.image = meme.originalImage
         setupTextField(font: meme.font)
-        cellTopText.text = meme.topText
+        
+        cellImageView.image = meme.originalImage
+        cellTopText.text =    meme.topText
         cellBottomText.text = meme.bottomText
-        cellImageView.layer.cornerRadius = 5.0
-        cellImageView.layer.borderWidth = 1
-        cellImageView.layer.borderColor = UIColor.black.cgColor
+        
+        cellImageView.layer.cornerRadius =  5.0
+        cellImageView.layer.borderWidth =   1
+        cellImageView.layer.borderColor =   UIColor.black.cgColor
         cellImageView.layer.masksToBounds = true
-        cellImageView.contentMode = .scaleAspectFill
+        cellImageView.contentMode =         .scaleAspectFill
     }
 }
 
@@ -58,8 +59,10 @@ class CollectionViewCellController: UICollectionViewCell {
 extension CollectionViewCellController: UITextFieldDelegate {
     
     func initTextField(_ textField : UITextField, attribute : [NSAttributedString.Key : Any]) {
+        
         textField.delegate = self
-        textField.defaultTextAttributes = attribute
+        
+        textField.defaultTextAttributes =    attribute
         textField.isUserInteractionEnabled = false
     }
     
@@ -70,10 +73,11 @@ extension CollectionViewCellController: UITextFieldDelegate {
         
         let attributes: [NSAttributedString.Key : Any] = [
             .foregroundColor : UIColor.white,
-            .strokeColor : UIColor.black,
-            .strokeWidth : -4,
-            .font: UIFont(name: font, size: 16)!,
-            .paragraphStyle: paragraphStyle
+            .strokeColor :     UIColor.black,
+            .strokeWidth :     -4,
+            .font: UIFont(name: font,
+                          size: 16)!,
+            .paragraphStyle:    paragraphStyle
         ]
         
         initTextField(cellTopText, attribute: attributes)

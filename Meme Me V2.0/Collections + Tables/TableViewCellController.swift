@@ -13,7 +13,7 @@ class TableViewCellController: UITableViewCell {
     //Properties
     
     @IBOutlet weak var cellImageView: UIImageView!
-    @IBOutlet weak var cellLabel: UILabel!
+    @IBOutlet weak var cellLabel:     UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,9 +25,9 @@ class TableViewCellController: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
-        let backgroundView = UIView()
+        let backgroundView =             UIView()
         backgroundView.backgroundColor = UIColor(white: 1, alpha: 0.1)
-        selectedBackgroundView = backgroundView
+        selectedBackgroundView =         backgroundView
 
     }
     
@@ -35,14 +35,14 @@ class TableViewCellController: UITableViewCell {
     
     func configureCell (with meme: Meme) {
      
-        cellImageView.layer.cornerRadius = 5.0
-        cellImageView.layer.borderWidth = 1
-        cellImageView.layer.borderColor = UIColor.black.cgColor
+        cellImageView.layer.cornerRadius =  5.0
+        cellImageView.layer.borderWidth =   1
+        cellImageView.layer.borderColor =   UIColor.black.cgColor
         cellImageView.layer.masksToBounds = true
-        cellImageView.contentMode = .scaleAspectFill
+        cellImageView.contentMode =         .scaleAspectFill
         
         self.cellImageView.image = meme.originalImage
-        self.cellLabel.text = "\(meme.topText) \(meme.bottomText)"
+        self.cellLabel.text =      "\(meme.topText) \(meme.bottomText)"
         
         
     }

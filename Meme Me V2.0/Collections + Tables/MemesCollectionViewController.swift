@@ -14,12 +14,12 @@ class MemesCollectionViewController: MemeMeController {
     
     fileprivate var longPressGesture: UILongPressGestureRecognizer!
     
-    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var flowLayout:     UICollectionViewFlowLayout!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var editButton: UIBarButtonItem!
-    @IBOutlet weak var addButton: UIBarButtonItem!
-    @IBOutlet weak var deleteButton: UIBarButtonItem!
-    @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var editButton:     UIBarButtonItem!
+    @IBOutlet weak var addButton:      UIBarButtonItem!
+    @IBOutlet weak var deleteButton:   UIBarButtonItem!
+    @IBOutlet weak var logo:           UIImageView!
     
     let cellID = "CollectionViewCell"
     
@@ -44,10 +44,10 @@ class MemesCollectionViewController: MemeMeController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
         collectionView.reloadData()
         setFlowLayout()
         checkMemesArray()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -58,24 +58,29 @@ class MemesCollectionViewController: MemeMeController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        isViewInEditMode(false)
         
+        isViewInEditMode(false)
     }
     
     //MARK: Methods
     
     //Set flow layout
     func setFlowLayoutValues(interItemAndLine spacing: CGFloat, cellsPerRow: CGFloat){
-
+        
         guard let collectionViewFrameWidth = collectionView?.frame.width else {return}
-
+        
         let dimension = (collectionViewFrameWidth - ((cellsPerRow + 1) * spacing)) / cellsPerRow
-
+        
         flowLayout.minimumInteritemSpacing = spacing
-        flowLayout.minimumLineSpacing = spacing
-        flowLayout.itemSize = CGSize(width: dimension, height: dimension)
-        flowLayout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
-
+        flowLayout.minimumLineSpacing =      spacing
+        
+        flowLayout.itemSize =     CGSize(width: dimension,
+                                         height: dimension)
+        
+        flowLayout.sectionInset = UIEdgeInsets(top:    spacing,
+                                               left:   spacing,
+                                               bottom: spacing,
+                                               right:  spacing)
     }
     
     func setFlowLayout() {
@@ -86,13 +91,14 @@ class MemesCollectionViewController: MemeMeController {
             setFlowLayoutValues(interItemAndLine: 5, cellsPerRow: 6)
         }
     }
-   
+    
     //Set editing behaviors
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         
         addButton.isEnabled = !editing
+        
         collectionView.allowsMultipleSelection = editing
         let indexPaths = collectionView.indexPathsForVisibleItems
         
@@ -106,6 +112,7 @@ class MemesCollectionViewController: MemeMeController {
     //Method to recognize the long press that will be used to move the cells
     
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer) {
+        
         switch (gesture.state){
         case .began:
             guard let selectedIndexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else {break}
@@ -131,7 +138,7 @@ class MemesCollectionViewController: MemeMeController {
             isViewInEditMode(false)
         }
     }
-
+    
     @IBAction func addButton(_ sender: Any) {
         guard let controller = storyboard?.instantiateViewController(withIdentifier: "EditMemeController") as? EditMemeController else {return}
         present(controller, animated: true, completion: nil)
@@ -162,14 +169,16 @@ class MemesCollectionViewController: MemeMeController {
     //Method to check if the view is in edit mode and set buttons and UI properly
     
     func isViewInEditMode(_ editing: Bool) {
-        if editing {
-            editButton.image = UIImage(named: "doneShape")
-            addButton.isEnabled = false
+        
+        switch editing {
+        case true:
+            editButton.image =       UIImage(named: "doneShape")
+            addButton.isEnabled =    false
             deleteButton.tintColor = .white
             deleteButton.isEnabled = true
-        } else {
-            editButton.image = UIImage(named: "editShape")
-            addButton.isEnabled = true
+        case false:
+            editButton.image =       UIImage(named: "editShape")
+            addButton.isEnabled =    true
             deleteButton.tintColor = .clear
             deleteButton.isEnabled = false
         }
@@ -178,16 +187,16 @@ class MemesCollectionViewController: MemeMeController {
     //Check if memes array is empty and set the logo and edit button enable accordingly
     
     func checkMemesArray() {
+        
         if MemesList.shared.memes.isEmpty {
             editButton.isEnabled = false
-            logo.isHidden = false
+            logo.isHidden =        false
             isViewInEditMode(false)
         } else {
             editButton.isEnabled = true
-            logo.isHidden = true
+            logo.isHidden =        true
         }
     }
-    
 }
 
 //MARK: UICollectionView Delegate and DataSource
@@ -212,10 +221,12 @@ extension MemesCollectionViewController: UICollectionViewDelegate, UICollectionV
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! CollectionViewCellController
         let model = MemesList.shared.memes[indexPath.row]
+        
         cell.configureCell(with: model)
-        cell.layer.shadowColor = UIColor.black.cgColor
-        cell.layer.shadowOffset = CGSize(width: 1, height: 1.0)
-        cell.layer.shadowRadius = 1.0
+        
+        cell.layer.shadowColor =   UIColor.black.cgColor
+        cell.layer.shadowOffset =  CGSize(width: 1, height: 1.0)
+        cell.layer.shadowRadius =  1.0
         cell.layer.shadowOpacity = 0.2
         
         cell.isEditing = isEditing
@@ -226,11 +237,13 @@ extension MemesCollectionViewController: UICollectionViewDelegate, UICollectionV
     //Present MemeDetailController when cell is tapped
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if isEditing { //This statment prevent the user to be send to MemeDetailController if clicks on the cell while editing
+        
+        if isEditing { //This statment prevent the user to be sent to MemeDetailController if clicks on the cell while editing
             return
         }
         guard let controller = storyboard?.instantiateViewController(withIdentifier: "MemeDetailController") as? MemeDetailController else {return}
-        let model = MemesList.shared.memes[indexPath.row]
+        
+        let model =       MemesList.shared.memes[indexPath.row]
         controller.meme = model
         present(controller, animated: true, completion: nil)
     }

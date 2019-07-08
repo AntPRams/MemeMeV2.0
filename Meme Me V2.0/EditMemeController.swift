@@ -93,6 +93,9 @@ class EditMemeController: MemeMeController {
             updateConstraintsToImage(image: imageMemeView.image!)
             shareButton.isEnabled = true
             cancelButton(shouldReturn: false)
+        } else {
+            topTextField.text =    "PICK"
+            bottomTextField.text = "A IMAGE"
         }
         
     }
@@ -417,27 +420,28 @@ extension EditMemeController: UIImagePickerControllerDelegate, UINavigationContr
 
 extension EditMemeController: UITextFieldDelegate {
     
-    func initTextField(_ textField : UITextField, text : String, attribute : [NSAttributedString.Key : Any]) {
-        textField.delegate = self
-        textField.text = text
+    func initTextField(_ textField: UITextField, attribute: [NSAttributedString.Key : Any]) {
+        
+        textField.delegate =              self
         textField.defaultTextAttributes = attribute
     }
     
     func setupTextField(font: String) {
         
-        let paragraphStyle = NSMutableParagraphStyle()
+        let paragraphStyle =       NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         
         let attributes: [NSAttributedString.Key : Any] = [
             .foregroundColor : UIColor.white,
-            .strokeColor : UIColor.black,
-            .strokeWidth : -4,
-            .font: UIFont(name: font, size: 40)!,
-            .paragraphStyle: paragraphStyle
+            .strokeColor :     UIColor.black,
+            .strokeWidth :     -4,
+            .font: UIFont(name: font,
+                          size: 40)!,
+            .paragraphStyle:    paragraphStyle
         ]
         
-        initTextField(topTextField, text: "PICK", attribute: attributes)
-        initTextField(bottomTextField, text: "A IMAGE", attribute: attributes)
+        initTextField(topTextField, attribute: attributes)
+        initTextField(bottomTextField, attribute: attributes)
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -458,10 +462,10 @@ extension EditMemeController: UITextFieldDelegate {
             if textField.text == word  {
                 if topTextField.isEditing && topTextFieldWasEdited == false {
                     topTextFieldWasEdited = true
-                    topTextField.text = ""
+                    topTextField.text =     ""
                 } else if bottomTextField.isEditing && bottomTextFieldWasEdited == false {
                     bottomTextFieldWasEdited = true
-                    bottomTextField.text = ""
+                    bottomTextField.text =     ""
                 }
             }
         }
@@ -472,7 +476,6 @@ extension EditMemeController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-    
 }
 
 //MARK: UIPickerView Methods
@@ -480,38 +483,42 @@ extension EditMemeController: UITextFieldDelegate {
 extension EditMemeController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func customPickerView() {
-        picker.delegate = self
-        picker.dataSource = self
-        picker.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.9)
-        picker.autoresizingMask = .flexibleWidth
-        picker.contentMode = .center
+        picker.delegate =        self
+        picker.dataSource =      self
+        picker.backgroundColor = UIColor(red:   0,
+                                         green: 0,
+                                         blue:  0,
+                                         alpha: 0.9)
+        
+        picker.autoresizingMask =        .flexibleWidth
+        picker.contentMode =             .center
         picker.showsSelectionIndicator = true
         picker.frame = CGRect(
-            x: 0.0,
-            y: UIScreen.main.bounds.size.height - 200,
+            x:     0.0,
+            y:     UIScreen.main.bounds.size.height - 200,
             width: self.view.frame.width,
             height: 200)
         
         
-        toolbarForPicker.barStyle = .blackTranslucent
+        toolbarForPicker.barStyle =  .blackTranslucent
         toolbarForPicker.tintColor = .white
         toolbarForPicker.frame = CGRect(
-            x: 0.0,
-            y: UIScreen.main.bounds.size.height - 200,
-            width: UIScreen.main.bounds.size.width,
+            x:      0.0,
+            y:      UIScreen.main.bounds.size.height - 200,
+            width:  UIScreen.main.bounds.size.width,
             height: 50)
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
-                                                  target: nil,
-                                                  action: nil)
+                                                     target: nil,
+                                                     action: nil)
         
-        let toolBarPickerDone = UIBarButtonItem(image: UIImage(named: "toolbarPickerDone"),
-                                                style: .plain,
+        let toolBarPickerDone = UIBarButtonItem(image:  UIImage(named: "toolbarPickerDone"),
+                                                style:  .plain,
                                                 target: self,
                                                 action: #selector(onDoneButtonTapped))
         
-        let toolbarTitle = UIBarButtonItem(title: "Font Style",
-                                           style: .done,
+        let toolbarTitle = UIBarButtonItem(title:  "Font Style",
+                                           style:  .done,
                                            target: nil,
                                            action: nil)
         
@@ -534,7 +541,7 @@ extension EditMemeController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     // The number of rows of data
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.arrayOfFonts.count
+        return arrayOfFonts.count
     }
     
     // Name of the font to return
