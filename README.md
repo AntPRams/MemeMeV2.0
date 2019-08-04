@@ -1,12 +1,12 @@
 # MemeMe V2.0
 
 A project required by Udacity that serves the purpose of making a meme through a photo from the album or, if the device has the a camera available, through a photo.
-The project was approved for the 3th module of the course.
+The project was approved for the 3rd module of the course.
 It is a second version of the app with the additions of the UITableView and UICollectionView.
 
 ## Getting Started
 
-This is the project of the 3th module in the Udacity iOS Dev Nanodegree to atest our capabilities of dealing with UIKit essentials.
+This is the project of the 3rd module in the Udacity iOS Dev Nanodegree to atest our capabilities of dealing with UIKit essentials.
 
 The intentionality of the project served to learn how to define and know the purpose of delegates, tab bar controller, navigation controller and all essential components in the development of the user interface.
 
