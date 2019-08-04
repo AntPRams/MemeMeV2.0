@@ -243,7 +243,7 @@ extension MemesCollectionViewController: UICollectionViewDelegate, UICollectionV
         }
         guard let controller = storyboard?.instantiateViewController(withIdentifier: "MemeDetailController") as? MemeDetailController else {return}
         
-        let model =       MemesList.shared.memes[indexPath.row]
+        let model = MemesList.shared.memes[indexPath.row]
         controller.meme = model
         present(controller, animated: true, completion: nil)
     }
