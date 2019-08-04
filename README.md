@@ -14,7 +14,7 @@ The app is used to make a Meme through a camera or a album photo and then share 
 
 ## UI Details
 
-<img src=Images/MemeMe UI.png>
+<img src=Images/MemeMeUI.png>
 
 - **Root Screen**: There are four icons on screen, on the toolbar the user can choose between a UITableView or a UICollectionView to see the collection. The navigation bar has a icon disable in the top left corner, that icon is used to edit the collection (move and delete cells). The plus icon, is used to generate a new meme.
 
